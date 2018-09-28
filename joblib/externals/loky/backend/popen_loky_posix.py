@@ -163,6 +163,7 @@ if sys.platform != "win32":
                 with os.fdopen(parent_w, 'wb') as f:
                     f.write(getattr(fp, method)())
                 self.pid = pid
+                os.system("taskset -p 0xff %d" % pid)
             finally:
                 if parent_r is not None:
                     util.Finalize(self, os.close, (parent_r,))
